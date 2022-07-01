@@ -23,16 +23,10 @@ export default function App() {
     }
 
     return (
-        <ScreenSizeContext.Provider value={screenSizes}>
-            <QuestionSwiper/>
-        </ScreenSizeContext.Provider>
+        <GestureHandlerRootView style={{flex: 1}}>
+            <ScreenSizeContext.Provider value={screenSizes}>
+                <QuestionSwiper/>
+            </ScreenSizeContext.Provider>
+        </GestureHandlerRootView>
     );
 }
-
-const styles = StyleSheet.create(
-    {
-        main: {
-            flex: 1
-        }
-    }
-)
