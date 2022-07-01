@@ -1,17 +1,9 @@
 import React from 'react';
-import { Text, View, StyleSheet, Button, TouchableHighlight, TextInput } from 'react-native';
+import { Text, View, StyleSheet, TextInput } from 'react-native';
 import {generateRandomColor} from '../utils/Common'
 import Icon from '../utils/icon/Icon'
-import IconAnnotated from '../utils/icon/IconAnnotated'
 import ScreenSizeContext from '../ScreenSizeContext'
 
-/*
-<TouchableHighlight style={styles.commentBoxIcon} underlayColor='white' onPress={() => console.log('ddd')}>
-  <View style={styles.commentBox}>
-    <Text style={styles.comment}>{comment}</Text>
-  </View>
-</TouchableHighlight>
-*/
 
 const TEXT_LENGTH_MAX = 70
 const COMMENT_PLACEHOLDER = '댓글 달기...'
@@ -30,7 +22,6 @@ const CommentWriter = ({comments, setComments}) => {
     e => setTextInputHeight(Math.min(e.nativeEvent.layout.height, TEXTINPUT_MAX_HEIGHT)), [TEXTINPUT_MAX_HEIGHT])
   
   const handleCommentSubmit = (e) => {
-    console.log(comments)
     const newComment={
       "uuid": comments.length,
         "writer": {
@@ -73,6 +64,7 @@ const CommentWriter = ({comments, setComments}) => {
           />
         <Text
           style={[styles.hiddenComment, {width: textInputWidth}]}
+          onPress={() => console.log('comment pressed')}
           onLayout={handleSizeChange}>
           {comment}
         </Text>
