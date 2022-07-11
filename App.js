@@ -3,6 +3,7 @@ import {Text, View, StyleSheet} from 'react-native';
 import {StatusBar, Dimensions} from 'react-native';
 import {GestureHandlerRootView, gestureHandlerRootHOC} from "react-native-gesture-handler";
 
+import './config'
 import ScreenSizeContext from './src/components/ScreenSizeContext'
 import QuestionSwiper from './src/components/questionSwiper/Main'
 

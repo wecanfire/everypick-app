@@ -47,7 +47,7 @@ const DEFAULT_PRESS_ACTION = {state: PRESS_RELEASE, start_pos: {pageX: Infinity,
 
 function Middle(props) {
     const username = props.data['writer']
-    const question = props.data['question']
+    const question = props.data['text']
     const hashtags = props.data['hashtags']
     // const [selectable, setSelectable] = React.useState(false)
     const [questionBoxSize, setQuestionBoxSize] = React.useState({width: 0, height: 0})
@@ -203,55 +203,7 @@ function Middle(props) {
     const onMoveShouldSetResponder = e => {
         return true
     }
-    // <HorizontalMarginedContainer
-    //     style={[styles.main, props.style]}
-    // >
-    //   <View style={styles.userIconBar}>
-    //     <UserIcon username={username}></UserIcon>
-    //   </View>
-    //   <View
-    //       style={{flex:1}}
-    //       onStartShouldSetResponder={e => true}
-    //       onMoveShouldSetResponder={e => true}
-    //       onResponderGrant={onResponderGrant}
-    //       onResponderMove={e => dispatch({type: PRESS_MOVE, event: e})}
-    //       onResponderRelease={e => dispatch({type: PRESS_RELEASE, event: e})}
-    //       onResponderTerminate={e => {
-    //         console.log('terminate')
-    //         dispatch({type: PRESS_RELEASE, event: e})
-    //       }
-    //       }
-    //
-    //   >
-    //     <View
-    //         style={styles.questionBox}
-    //         onLayout={updateQuestionBoxSize}
-    //     >
-    //       <Text
-    //           style={styles.question} onStartShouldSetResponder={e => false} onMoveShouldSetResponder={e => false}
-    //           selectable={true}
-    //       >
-    //         {question}
-    //       </Text>
-    //       <View style={styles.hashtagRows}>
-    //         {hashtags.map((hashtag, i) => (
-    //             <Hashtag tag={hashtag} style={styles.hashtag} selectable={true} onStartShouldSetResponder={e => false} onMoveShouldSetResponder={e => false} />
-    //         ))}
-    //       </View>
-    //     </View>
-    //     <View
-    //         style={styles.whitespaceBar}
-    //         onLayout={updateBottomSize}
-    //     />
-    //     <View style={{ position: 'absolute', flexDirection: 'column', width: questionBoxSize.width, height: questionBoxSize.height }}>
-    //       <View style={{ flexDirection:'row', flex:1}}>
-    //         <View style={{flex:1, backgroundColor: pollingColors.left}} />
-    //         <View style={{flex:1, backgroundColor: pollingColors.right}} />
-    //       </View>
-    //     </View>
-    //
-    //   </View>
-    // </HorizontalMarginedContainer>
+
     return (
         <HorizontalMarginedContainer
             style={[styles.main, props.style]}
