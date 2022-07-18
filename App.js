@@ -5,7 +5,7 @@ import {GestureHandlerRootView, gestureHandlerRootHOC} from "react-native-gestur
 
 import './config'
 import ScreenSizeContext from './src/components/ScreenSizeContext'
-import QuestionSwiper from './src/components/questionSwiper/Main'
+import QuestionSwiper from './src/components/questionSwiper/QuestionSwiper'
 
 
 export default function App() {

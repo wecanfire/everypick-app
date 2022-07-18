@@ -1,19 +1,18 @@
-class Question {
+class QuestionClass {
     constructor({uuid,
                 writer,
-                create_date,
+                createDate,
                 text,
                 hashtags,
                 like_count,
-                comment_count,
-                share_count}) {
+                shareCount}) {
         this.uuid = uuid
         this.writer = writer
-        this.create_date = create_date
+        this.createDate = createDate
         this.text = text
         this.hashtags = hashtags
-        this.like_count = like_count
-        this.share_count = share_count
+        this.likeCount = like_count
+        this.shareCount = shareCount
         this.answers = []
     }
 
@@ -22,4 +21,4 @@ class Question {
     }
 }
 
-export default Question
+export default QuestionClass

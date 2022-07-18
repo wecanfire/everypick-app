@@ -1,49 +1,42 @@
 import React from 'react';
-import {Text, View, StyleSheet, TextComponent, Vibration} from 'react-native';
-import {StatusBar, Dimensions} from 'react-native';
-import Swiper from 'react-native-swiper';
+import {Text, View, StyleSheet} from 'react-native';
 import PagerView from 'react-native-pager-view';
 
 import QuestionMain from '../questionPage/Main';
-import CommentList from '../commentPage/Main';
-import questions from "../../assets/question_data.json";
-import loadQuestions from "./QuestionProvider";
-import question from "./Question";
-import commentsBundles from "../../assets/comment_data.json";
-import {setWarningFilter} from "react-native/Libraries/LogBox/Data/LogBoxData";
+import CommentList from '../commentPage/CommentList';
+import QuestionList from "../obj/QuestionListClass";
 
-let PREVIOUSQUESTIONS = []
-const Main = () => {
-    const [questions, setQuestions] = React.useState([]);
-    const [toIndex, setToIndex] = React.useState(0);
+
+const QuestionSwiper = () => {
+    const [questionComments, setQuestionComments] = React.useState(new QuestionList());
+    const [comments, setComments] = React.useState({});
+
     React.useEffect(() => {
         // 초기 데이터 로드
-        setQuestions(loadQuestions(PREVIOUSQUESTIONS, QUESTIONS_LOAD_SIZE_INITIAL))
+        questionComments.addNewQuestions()
+        setQuestionComments(questionComments.copy())
     }, []);
 
-    const commentsBundles = require('../../assets/comment_data.json');
+    // refs
     const bottomSheetModalRef = React.useRef();
     const pageViewRef = React.useRef();
-    // comment 컴포넌트에서 state setter 취득
-    var commentSetter;
-    const onCommentMount = (setter) => {
-        commentSetter = setter
-    }
+    const r = React.useRef();
 
     // 페이지 전환시 콜백
     const onPageSelected = (e) => {
         let pos = e.nativeEvent.position
+        // 댓글 변경
+        setComments(questionComments.getCOfQ(questionComments.getQOfIndex(pos)))
         // 마지막 질문 도달시 새 질문 로드
-        if (pos === questions.length - 1) {
-            let numRemove = (questions.length + QUESTIONS_LOAD_SIZE) - QUESTIONS_QUEUE_SIZE
-            let loaded = loadQuestions(questions, QUESTIONS_LOAD_SIZE)
+        if (pos === questionComments.length - 1) {
+            let numRemove = (questionComments.length + QUESTIONS_LOAD_SIZE) - QUESTIONS_QUEUE_SIZE
             if (0 <= numRemove) {
                 // queue 다 찼을 때 오래된 질문 덜어내야 함
-                setQuestions([...questions.splice(numRemove), ...loaded])
-            } else {
-                // 새 질문 그대로 더하기
-                setQuestions([...questions, ...loaded])
+                questionComments.removeOldQuestions()
             }
+            // 새 질문 그대로 더하기
+            questionComments.addNewQuestions()
+            setQuestionComments(questionComments.copy())
         }
     }
 
@@ -56,7 +49,7 @@ const Main = () => {
                 orientation={"vertical"}
                 onPageSelected={onPageSelected}
             >
-                {questions.map((question, i) => (
+                {questionComments.questions.map((question, i) => (
                     <View
                         style={{flex: 1}}
                         key={question.uuid}
@@ -72,8 +65,7 @@ const Main = () => {
             </PagerView>
             <CommentList
                 bottomSheetModalRef={bottomSheetModalRef}
-                firstCommentBundle={commentsBundles[0]}
-                onMount={onCommentMount}
+                comments={comments}
             />
         </View>
     );
@@ -91,5 +83,5 @@ const styles = StyleSheet.create(
     }
 )
 
-export default Main;
+export default QuestionSwiper;
 

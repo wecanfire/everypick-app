@@ -7,12 +7,13 @@ import Comment from './Comment'
 import CommentWriter from './CommentWriter'
 import {gestureHandlerRootHOC} from "react-native-gesture-handler";
 
-const Main = ({bottomSheetModalRef, firstCommentBundle, onMount}) => {
-    // commentsSet 은 댓글 뭉치, 댓글 뭉치에 대한 메타데이터를 포함하고 있다
-    const [commentBundle, setCommentBundle] = React.useState(firstCommentBundle)
-    React.useEffect(() => {
-        onMount(setCommentBundle);
-    }, [setCommentBundle]);
+const CommentList = ({bottomSheetModalRef, comments}) => {
+    // state 를 부모 컴포넌트에게 역으로 전달
+    // const [commentBundle, setCommentBundle] = React.useState(firstCommentBundle)
+    // React.useEffect(() => {
+    //     // 부모로부터 callback 받아서 stateSetter 객체 전달, 부모가 setter 객체 부름
+    //     onMount(setCommentBundle);
+    // }, [setCommentBundle]);
 
     const screenSizes = useContext(ScreenSizeContext)
     // Modal 내부 Content View 높이: 맨위 핸들 높이를
@@ -33,7 +34,6 @@ const Main = ({bottomSheetModalRef, firstCommentBundle, onMount}) => {
     const ItemSeparator = () => (
         <View style={styles.itemSeparator}/>
     )
-
     return (
         <BottomSheetModalProvider>
             <BottomSheetModal
@@ -46,8 +46,8 @@ const Main = ({bottomSheetModalRef, firstCommentBundle, onMount}) => {
             >
                 <View style={[styles.container, {height: contentContainerHeight}]}>
                     <BottomSheetFlatList
-                        data={commentBundle['comments']}
-                        keyExtractor={(i) => i['uuid']}
+                        data={comments}
+                        keyExtractor={(i) => i.uuid}
                         renderItem={renderItem}
                         ItemSeparatorComponent={ItemSeparator}
                     />
@@ -67,4 +67,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Main;
+export default CommentList;

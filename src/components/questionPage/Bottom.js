@@ -7,28 +7,25 @@ import HorizontalMarginedContainer from '../utils/HorizontalMarginedContainer'
 import IconAnntated from '../utils/icon/IconAnnotated'
 import Icon from '../utils/icon/Icon'
 
-function Bottom(props) {
-    const comment_count = props.data['comment_count']
-    const like_count = props.data['like_count']
-    const share_count = props.data['share_count']
+function Bottom({data, bottomSheetModalRef, style}) {
 
     const handleCommentButtonPress = () => {
         console.log('pressing comment button')
-        props.bottomSheetModalRef.current.present();
+        bottomSheetModalRef.current.present();
     }
 
     // 임시 아이콘 상자 랜더링
     const genIconBox = () => <View style={styles.iconBox}/>
 
     return (
-        <HorizontalMarginedContainer style={[styles.main, props.style]}>
+        <HorizontalMarginedContainer style={[styles.main, style]}>
             <View style={styles.buttonBar}>
                 <Icon name={'button 1'}>{genIconBox()}</Icon>
                 <Icon name={'button 2'}>{genIconBox()}</Icon>
-                <IconAnntated name='comment' text={comment_count}
+                <IconAnntated name='comment' text={data.commentCount}
                               onPressCallback={handleCommentButtonPress}>{genIconBox()}</IconAnntated>
-                <IconAnntated name='like' text={like_count}>{genIconBox()}</IconAnntated>
-                <Icon name='share' text={share_count}>{genIconBox()}</Icon>
+                <IconAnntated name='like' text={data.likeCount}>{genIconBox()}</IconAnntated>
+                <Icon name='share' text={data.shareCount}>{genIconBox()}</Icon>
                 <Icon name='etc'>{genIconBox()}</Icon>
             </View>
         </HorizontalMarginedContainer>
