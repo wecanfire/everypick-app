@@ -1,5 +1,6 @@
 import getQuestions from "../api/question/QuestionApi";
 import {getComments} from "../api/comment/CommentApi";
+import QuestionComments from "./QuestionCommentsClass";
 
 class QuestionList {
     constructor(questionDict) {
@@ -11,9 +12,17 @@ class QuestionList {
         // 새 질문 가져오기
         let newQuestions = getQuestions(this.qList)
         // 새 질문에 대한 코멘트 불러오기
-        let comments = newQuestions.map(q => getComments(q.uuid, COMMENTS_INIT_INDEX))
-        newQuestions.forEach((q, i) => this.qDict.set(q, comments[i]))
-        this.qList.concat(newQuestions)
+        let qComments = newQuestions.map(q => {
+            const qComment = new QuestionComments(q.uuid);
+            qComment.addNewComments(COMMENTS_LOAD_SIZE_INITIAL);
+            return qComment
+        })
+        newQuestions.forEach((q, i) => this.qDict.set(q, qComments[i]))
+        if (this.qList.length === 0) {
+            this.qList = newQuestions
+        } else {
+            this.qList.concat(newQuestions)
+        }
     }
 
     removeOldQuestions(numRemove) {
@@ -24,12 +33,16 @@ class QuestionList {
         this.qList = this.qList.slice(numRemove)
     }
 
-    getQOfIndex(index) {
+    getQuestionOfIndex(index) {
         return this.qList[index]
     }
 
-    getCOfQ(question) {
+    getCommentsOfQuestion(question) {
         return this.qDict.get(question)
+    }
+
+    getCommentsOfIndex(index) {
+        return this.qDict.get(this.qList[index])
     }
 
     copy() {

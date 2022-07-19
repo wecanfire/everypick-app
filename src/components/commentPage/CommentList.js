@@ -7,7 +7,11 @@ import Comment from './Comment'
 import CommentWriter from './CommentWriter'
 import {gestureHandlerRootHOC} from "react-native-gesture-handler";
 
-const CommentList = ({bottomSheetModalRef, comments}) => {
+const CommentList = ({bottomSheetModalRef, questionComments}) => {
+    const [comments, setComments] = React.useState({})
+    React.useEffect(() => {
+        setComments(questionComments.comments)
+    }, [questionComments])
     // state 를 부모 컴포넌트에게 역으로 전달
     // const [commentBundle, setCommentBundle] = React.useState(firstCommentBundle)
     // React.useEffect(() => {
@@ -24,7 +28,6 @@ const CommentList = ({bottomSheetModalRef, comments}) => {
 
     // change 시의 callback
     const onChangeCallback = () => {
-        console.log('comment change')
     }
     // render
     const renderItem = ({item}) => (
@@ -34,6 +37,11 @@ const CommentList = ({bottomSheetModalRef, comments}) => {
     const ItemSeparator = () => (
         <View style={styles.itemSeparator}/>
     )
+    // onEndReachedThreshold 와 함께 리스트 끝에 다달았을 때 trigger
+    const onEndReached = distanceFromEnd => {
+        questionComments.addNewComments()
+        setComments(questionComments.comments)
+    }
     return (
         <BottomSheetModalProvider>
             <BottomSheetModal
@@ -50,6 +58,8 @@ const CommentList = ({bottomSheetModalRef, comments}) => {
                         keyExtractor={(i) => i.uuid}
                         renderItem={renderItem}
                         ItemSeparatorComponent={ItemSeparator}
+                        onEndReached={onEndReached}
+                        onEndReachedThreshold={0.8}
                     />
                 </View>
             </BottomSheetModal>

@@ -23,7 +23,7 @@ const getGarbageComments = (questionId, indexOfLast) => {
     // 필요시에 더 고도화 할 것
     return Array.from({length: COMMENTS_LOAD_SIZE}, () => {
         // const uuid = Math.floor(Math.random() * 1024) + 1;
-        const uuid = indexOfLast++;
+        const uuid = ++indexOfLast;
         const create_date = null // 날짜 시간 표현으로 바꿀 것
         const text = `${questionId}-${uuid} ${genFakeComment()}` // 특정 길이 제약을 받는, 단어 집합으로 변경할 것
         return new CommentClass({

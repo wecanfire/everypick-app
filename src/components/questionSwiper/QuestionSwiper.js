@@ -8,13 +8,14 @@ import QuestionList from "../obj/QuestionListClass";
 
 
 const QuestionSwiper = () => {
-    const [questionComments, setQuestionComments] = React.useState(new QuestionList());
-    const [comments, setComments] = React.useState({});
+    const [questionList, setQuestionList] = React.useState(new QuestionList());
+    const [questionComments, setQuestionComments] = React.useState({});
 
     React.useEffect(() => {
         // 초기 데이터 로드
-        questionComments.addNewQuestions()
-        setQuestionComments(questionComments.copy())
+        questionList.addNewQuestions()
+        setQuestionList(questionList.copy())
+        setQuestionComments(questionList.getCommentsOfIndex(0))
     }, []);
 
     // refs
@@ -26,17 +27,17 @@ const QuestionSwiper = () => {
     const onPageSelected = (e) => {
         let pos = e.nativeEvent.position
         // 댓글 변경
-        setComments(questionComments.getCOfQ(questionComments.getQOfIndex(pos)))
+        setQuestionComments(questionList.getCommentsOfIndex(pos))
         // 마지막 질문 도달시 새 질문 로드
-        if (pos === questionComments.length - 1) {
-            let numRemove = (questionComments.length + QUESTIONS_LOAD_SIZE) - QUESTIONS_QUEUE_SIZE
+        if (pos === questionList.length - 1) {
+            let numRemove = (questionList.length + QUESTIONS_LOAD_SIZE) - QUESTIONS_QUEUE_SIZE
             if (0 <= numRemove) {
                 // queue 다 찼을 때 오래된 질문 덜어내야 함
-                questionComments.removeOldQuestions()
+                questionList.removeOldQuestions()
             }
             // 새 질문 그대로 더하기
-            questionComments.addNewQuestions()
-            setQuestionComments(questionComments.copy())
+            questionList.addNewQuestions()
+            setQuestionList(questionList.copy())
         }
     }
 
@@ -49,7 +50,7 @@ const QuestionSwiper = () => {
                 orientation={"vertical"}
                 onPageSelected={onPageSelected}
             >
-                {questionComments.questions.map((question, i) => (
+                {questionList.questions.map((question, i) => (
                     <View
                         style={{flex: 1}}
                         key={question.uuid}
@@ -65,7 +66,7 @@ const QuestionSwiper = () => {
             </PagerView>
             <CommentList
                 bottomSheetModalRef={bottomSheetModalRef}
-                comments={comments}
+                questionComments={questionComments}
             />
         </View>
     );
