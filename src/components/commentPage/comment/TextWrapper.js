@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text} from 'react-native';
-import Icon from '../utils/icon/Icon'
+import Icon from '../../utils/icon/Icon'
 
 const TEXT_LENGTH_MAX = 255
 

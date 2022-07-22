@@ -1,9 +1,9 @@
 import React from 'react';
 import {Text, View, StyleSheet, Button} from 'react-native';
-import HorizontalMarginedContainer from '../utils/HorizontalMarginedContainer'
-import {generateRandomColor} from '../utils/Common'
-import Icon from '../utils/icon/Icon'
-import {setComment} from '../api/comment/CommentApi'
+import HorizontalMarginedContainer from '../../utils/HorizontalMarginedContainer'
+import {generateRandomColor} from '../../utils/Common'
+import Icon from '../../utils/icon/Icon'
+import {setComment} from '../../api/comment/CommentApi'
 import ThumbIcon from "./ThumbIcon";
 import TextWrapper from "./TextWrapper";
 
@@ -13,19 +13,18 @@ const CASE_DISLIKE = 'CASE_DISLIKE'
 
 // comment 좋아요 처리
 const reducer = (state, action) => {
-    console.log([action, state])
     switch (action.type) {
         case CASE_LIKE: {
-            if (state.writer.press === -1) {
+            if (state.writerPress === -1) {
                 state.dislikeCount -= 1;
                 state.likeCount += 1;
-                state.writer.press = 1;
-            } else if (state.writer.press === 1) {
+                state.writerPress = 1;
+            } else if (state.writerPress === 1) {
                 state.likeCount -= 1;
-                state.writer.press = 0;
-            } else if (state.writer.press === 0) {
+                state.writerPress = 0;
+            } else if (state.writerPress === 0) {
                 state.likeCount += 1;
-                state.writer.press = 1;
+                state.writerPress = 1;
             } else {
                 console.log('unknown')
             }
@@ -33,16 +32,16 @@ const reducer = (state, action) => {
             return {...state}
         }
         case CASE_DISLIKE: {
-            if (state.writer.press === -1) {
+            if (state.writerPress === -1) {
                 state.dislikeCount -= 1;
-                state.writer.press = 0;
-            } else if (state.writer.press === 1) {
+                state.writerPress = 0;
+            } else if (state.writerPress === 1) {
                 state.dislikeCount += 1;
                 state.likeCount -= 1;
-                state.writer.press = -1;
-            } else if (state.writer.press === 0) {
+                state.writerPress = -1;
+            } else if (state.writerPress === 0) {
                 state.dislikeCount += 1;
-                state.writer.press = -1;
+                state.writerPress = -1;
             } else {
                 console.log('unknown comment likeness')
             }
@@ -62,7 +61,7 @@ const Comment = ({item}) => {
             <View style={styles.textArea}>
                 <View style={styles.header}>
                     <Text style={styles.headerText}>{state.writer.name}</Text>
-                    <Text style={styles.headerText}>{state.writer.answer}</Text>
+                    <Text style={styles.headerText}>{state.writerAnswer}</Text>
                 </View>
                 <View style={styles.body}>
                     <TextWrapper text={state.text}></TextWrapper>
@@ -71,13 +70,13 @@ const Comment = ({item}) => {
                     <Icon name='like' onPressCallback={() => dispatch({type: CASE_LIKE})}>
                         <ThumbIcon
                             count={state.likeCount}
-                            style={state.writer.press === 1 ? styles.thumbIconActive : styles.thumbIconInactive}
+                            style={state.writerPress === 1 ? styles.thumbIconActive : styles.thumbIconInactive}
                         />
                     </Icon>
                     <Icon name='dislike' onPressCallback={() => dispatch({type: CASE_DISLIKE})}>
                         <ThumbIcon
                             count={state.dislikeCount}
-                            style={state.writer.press === -1 ? styles.thumbIconActive : styles.thumbIconInactive}
+                            style={state.writerPress === -1 ? styles.thumbIconActive : styles.thumbIconInactive}
                         />
                     </Icon>
                 </View>

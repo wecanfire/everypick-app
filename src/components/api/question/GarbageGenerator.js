@@ -1,4 +1,4 @@
-import QuestionClass from "../../obj/QuestionClass";
+import Question from "../../obj/Question";
 
 let INDEX = 1;
 
@@ -10,7 +10,7 @@ const getGarbageQuestions = (previousQuestions) => {
         const uuid = INDEX++;
         const createDate = null // 날짜 시간 표현으로 바꿀 것
         const text = `question ${uuid}` // 특정 길이 제약을 받는, 단어 집합으로 변경할 것
-        const question = new QuestionClass({
+        const question = new Question({
             uuid: uuid,
             writer: 'some.one',
             createDate: createDate,

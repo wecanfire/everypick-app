@@ -2,7 +2,7 @@ import React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import {StatusBar, Dimensions} from 'react-native';
 import {GestureHandlerRootView, gestureHandlerRootHOC} from "react-native-gesture-handler";
-
+import GarbageUserClass from "./src/components/obj/AppUser";
 import './config'
 import ScreenSizeContext from './src/components/ScreenSizeContext'
 import QuestionSwiper from './src/components/questionSwiper/QuestionSwiper'
@@ -23,6 +23,7 @@ export default function App() {
         BOTTOM_NAVIGATION_BAR_HEIGHT: BOTTOM_NAVIGATION_BAR_HEIGHT
     }
 
+    global.APP_USER = new GarbageUserClass()
     return (
         <GestureHandlerRootView style={{flex: 1}}>
             <ScreenSizeContext.Provider value={screenSizes}>

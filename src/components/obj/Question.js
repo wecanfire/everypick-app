@@ -1,4 +1,4 @@
-class QuestionClass {
+class Question {
     constructor({uuid,
                 writer,
                 createDate,
@@ -21,4 +21,4 @@ class QuestionClass {
     }
 }
 
-export default QuestionClass
+export default Question

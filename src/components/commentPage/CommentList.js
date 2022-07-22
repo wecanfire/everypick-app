@@ -3,9 +3,8 @@ import {StyleSheet, View, Text, Button} from "react-native";
 import {BottomSheetModal, BottomSheetModalProvider, BottomSheetFlatList} from "@gorhom/bottom-sheet";
 
 import ScreenSizeContext from '../ScreenSizeContext'
-import Comment from './Comment'
-import CommentWriter from './CommentWriter'
-import {gestureHandlerRootHOC} from "react-native-gesture-handler";
+import Comment from './comment/Comment'
+import CommentWriter from "./comment/CommentWriter";
 
 const CommentList = ({bottomSheetModalRef, questionComments}) => {
     const [comments, setComments] = React.useState({})
@@ -22,7 +21,7 @@ const CommentList = ({bottomSheetModalRef, questionComments}) => {
     const screenSizes = useContext(ScreenSizeContext)
     // Modal 내부 Content View 높이: 맨위 핸들 높이를
     const handleHeight = screenSizes.STATUS_BAR_HEIGHT
-    const contentContainerHeight = screenSizes.WINDOW_HEIGHT - screenSizes.BOTTOM_NAVIGATION_BAR_HEIGHT - handleHeight
+    // const contentContainerHeight = screenSizes.WINDOW_HEIGHT
 
     const snapPoints = ['100%']
 
@@ -39,7 +38,7 @@ const CommentList = ({bottomSheetModalRef, questionComments}) => {
     )
     // onEndReachedThreshold 와 함께 리스트 끝에 다달았을 때 trigger
     const onEndReached = distanceFromEnd => {
-        questionComments.addNewComments()
+        questionComments.getAddComments()
         setComments(questionComments.comments)
     }
     return (
@@ -52,7 +51,7 @@ const CommentList = ({bottomSheetModalRef, questionComments}) => {
                 handleHeight={handleHeight}
                 onChange={onChangeCallback}
             >
-                <View style={[styles.container, {height: contentContainerHeight}]}>
+                <View style={styles.commentList}>
                     <BottomSheetFlatList
                         data={comments}
                         keyExtractor={(i) => i.uuid}
@@ -62,13 +61,15 @@ const CommentList = ({bottomSheetModalRef, questionComments}) => {
                         onEndReachedThreshold={0.8}
                     />
                 </View>
+                <CommentWriter questionComments={questionComments}></CommentWriter>
             </BottomSheetModal>
         </BottomSheetModalProvider>
     );
 };
 
 const styles = StyleSheet.create({
-    container: {
+    commentList: {
+        flex: 1,
         justifyContent: 'center',
         backgroundColor: 'grey',
     },

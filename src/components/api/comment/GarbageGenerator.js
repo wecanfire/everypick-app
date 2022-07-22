@@ -1,4 +1,5 @@
-import CommentClass from "../../obj/CommentClass";
+import CommentClass from "../../obj/Comment";
+import User from "../../obj/User";
 
 const LOREM = [
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris non suscipit felis. Vivamus porttitor leo sit amet lacinia ullamcorper. In porta tortor in purus auctor, eu molestie risus tempus. Quisque nec facilisis odio. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur scelerisque, massa id viverra aliquet, odio eros scelerisque tellus, ac bibendum magna eros ut dolor. Nullam porta mattis metus, a auctor enim. Proin odio ex, ultricies id posuere et, commodo in nisl. Mauris sollicitudin nisi quis orci accumsan vulputate. Nunc a velit vel ex pharetra maximus. Praesent finibus mauris turpis, vel gravida velit gravida sit amet. Proin convallis quis augue feugiat lacinia. Nam condimentum ut nisi nec pulvinar. Mauris consectetur eros vitae convallis fringilla. Duis vestibulum velit rhoncus porttitor maximus.',
@@ -24,12 +25,14 @@ const getGarbageComments = (questionId, indexOfLast) => {
     return Array.from({length: COMMENTS_LOAD_SIZE}, () => {
         // const uuid = Math.floor(Math.random() * 1024) + 1;
         const uuid = ++indexOfLast;
-        const create_date = null // 날짜 시간 표현으로 바꿀 것
+        const createDate = null // 날짜 시간 표현으로 바꿀 것
         const text = `${questionId}-${uuid} ${genFakeComment()}` // 특정 길이 제약을 받는, 단어 집합으로 변경할 것
         return new CommentClass({
             uuid: uuid,
-            writer: 'some.one',
-            create_date: create_date,
+            writer: new User({name: 'some.one'}),
+            writerAnswer: null,
+            writerPress: 0,
+            createDate: createDate,
             text: text,
             likeCount: getRandomInteger(0, 100),
             dislikeCount: getRandomInteger(0, 100)

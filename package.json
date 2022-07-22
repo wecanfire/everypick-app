@@ -19,7 +19,8 @@
     "react-native-gesture-handler": "^2.5.0",
     "react-native-pager-view": "^5.4.24",
     "react-native-reanimated": "^2.8.0",
-    "react-native-swiper": "^1.6.0"
+    "react-native-swiper": "^1.6.0",
+    "react-native-uuid": "^2.0.1"
   },
   "devDependencies": {
     "@babel/core": "7.18.5",

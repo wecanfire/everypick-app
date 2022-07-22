@@ -4,7 +4,7 @@ import PagerView from 'react-native-pager-view';
 
 import QuestionMain from '../questionPage/Main';
 import CommentList from '../commentPage/CommentList';
-import QuestionList from "../obj/QuestionListClass";
+import QuestionList from "../obj/QuestionList";
 
 
 const QuestionSwiper = () => {
